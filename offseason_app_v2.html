@@ -1,0 +1,727 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#534AB7;--accent-light:#EEEDFE;--accent-mid:#AFA9EC;
+  --green:#3B6D11;--green-light:#EAF3DE;--green-mid:#97C459;
+  --coral:#993C1D;--coral-light:#FAECE7;--coral-mid:#F0997B;
+  --amber:#854F0B;--amber-light:#FAEEDA;--amber-mid:#EF9F27;
+}
+body{font-family:var(--font-sans);background:var(--color-background-tertiary)}
+.screen{display:none}
+.screen.active{display:block}
+
+/* INTRO */
+#s-intro{padding:0}
+.intro-hero{background:#26215C;padding:40px 24px 32px;text-align:center}
+.intro-logo{width:64px;height:64px;border-radius:20px;background:#534AB7;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px}
+.intro-title{font-size:26px;font-weight:500;color:#EEEDFE;line-height:1.2;margin-bottom:8px}
+.intro-sub{font-size:14px;color:#AFA9EC}
+.intro-period{margin:20px 24px 0;background:#1a1748;border-radius:var(--border-radius-lg);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.intro-period-icon{font-size:20px;color:#7F77DD}
+.intro-period-text{font-size:13px;color:#CECBF6}
+.intro-period-text strong{color:#EEEDFE;display:block;font-size:14px}
+.week-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:20px 24px 0}
+.wd{text-align:center;font-size:10px;padding:8px 2px;border-radius:var(--border-radius-md);background:#1a1748;color:#7F77DD;font-weight:500}
+.wd.today{background:#534AB7;color:#EEEDFE}
+.wd.rest{background:#0f0e2a;color:#3C3489}
+.wd span{display:block;font-size:16px;margin-top:2px;color:inherit}
+.intro-cta{margin:24px 24px 0;padding:14px;background:#534AB7;border-radius:var(--border-radius-lg);text-align:center;cursor:pointer;font-size:15px;font-weight:500;color:#EEEDFE;border:none;font-family:var(--font-sans);width:calc(100% - 48px)}
+.intro-cta:active{opacity:0.85}
+.intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 24px 32px}
+.istat{background:var(--color-background-primary);border-radius:var(--border-radius-md);padding:12px 8px;text-align:center;border:0.5px solid var(--color-border-tertiary)}
+.istat-num{font-size:22px;font-weight:500;color:#534AB7}
+.istat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+
+/* HOME */
+#s-home{padding:0 0 80px}
+.home-header{background:#26215C;padding:20px 20px 28px}
+.home-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.home-greeting{font-size:13px;color:#AFA9EC}
+.home-name{font-size:20px;font-weight:500;color:#EEEDFE}
+.home-back{background:none;border:none;color:#AFA9EC;font-size:13px;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;gap:4px}
+.day-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.day-scroll::-webkit-scrollbar{display:none}
+.day-pill{flex-shrink:0;padding:8px 14px;border-radius:20px;border:0.5px solid #534AB7;background:transparent;color:#AFA9EC;font-size:12px;cursor:pointer;font-family:var(--font-sans);transition:all 0.15s;text-align:center}
+.day-pill .dp-day{font-weight:500;display:block;color:inherit}
+.day-pill .dp-type{font-size:10px;display:block;margin-top:1px;color:#534AB7}
+.day-pill.active{background:#534AB7;border-color:#534AB7;color:#EEEDFE}
+.day-pill.active .dp-type{color:#AFA9EC}
+.day-pill.rest-day{border-color:#3C3489;color:#534AB7}
+.day-pill.rest-day .dp-type{color:#3C3489}
+.home-content{padding:16px}
+.today-banner{border-radius:var(--border-radius-lg);padding:16px;margin-bottom:16px;background:#EEEDFE;border:0.5px solid #AFA9EC}
+.tb-label{font-size:11px;color:#534AB7;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.tb-title{font-size:18px;font-weight:500;color:#26215C}
+.tb-sub{font-size:13px;color:#534AB7;margin-top:4px}
+.blocks-title{font-size:12px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px}
+.block-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color 0.15s}
+.block-card:active{background:var(--color-background-secondary)}
+.bc-top{display:flex;align-items:center;gap:12px}
+.bc-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.bc-icon.purple{background:#EEEDFE;color:#534AB7}
+.bc-icon.green{background:#EAF3DE;color:#3B6D11}
+.bc-icon.coral{background:#FAECE7;color:#993C1D}
+.bc-icon.amber{background:#FAEEDA;color:#854F0B}
+.bc-info{flex:1}
+.bc-name{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.bc-count{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.bc-arrow{color:var(--color-text-tertiary);font-size:16px}
+.bc-progress{margin-top:10px;height:3px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
+.bc-progress-fill{height:100%;border-radius:2px;transition:width 0.3s}
+.bc-progress-fill.purple{background:#534AB7}
+.bc-progress-fill.green{background:#3B6D11}
+.bc-progress-fill.coral{background:#993C1D}
+.bc-progress-fill.amber{background:#854F0B}
+.start-btn{width:100%;padding:15px;background:#534AB7;color:#EEEDFE;border:none;border-radius:var(--border-radius-lg);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
+.start-btn:active{opacity:0.85}
+.rest-screen{text-align:center;padding:48px 24px}
+.rest-screen i{font-size:56px;color:#534AB7;display:block;margin-bottom:16px}
+.rest-screen h2{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.rest-screen p{font-size:14px;color:var(--color-text-secondary)}
+
+/* BLOCK DETAIL */
+#s-block{padding:0 0 80px}
+.block-header{padding:20px;background:#26215C}
+.bh-back{background:none;border:none;color:#AFA9EC;font-size:13px;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.bh-title{font-size:20px;font-weight:500;color:#EEEDFE}
+.bh-sub{font-size:13px;color:#AFA9EC;margin-top:4px}
+.bh-progress{margin-top:14px;height:4px;background:#3C3489;border-radius:2px;overflow:hidden}
+.bh-progress-fill{height:100%;background:#7F77DD;border-radius:2px;transition:width 0.3s}
+.bh-prog-label{font-size:11px;color:#AFA9EC;margin-top:6px}
+.ex-list{padding:12px 16px}
+.ex-item{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px;transition:all 0.2s}
+.ex-item.done{background:var(--color-background-secondary);border-color:var(--color-border-tertiary)}
+.ei-top{display:flex;align-items:flex-start;gap:12px}
+.ei-check{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.ei-check.checked{background:#3B6D11;border-color:#3B6D11}
+.ei-check i{font-size:14px;color:#EAF3DE;display:none}
+.ei-check.checked i{display:block}
+.ei-body{flex:1;min-width:0}
+.ei-name{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.ex-item.done .ei-name{color:var(--color-text-secondary);text-decoration:line-through}
+.ei-reps{font-size:12px;color:var(--color-text-secondary);margin-top:4px}
+.ei-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.ei-vid{font-size:12px;color:#534AB7;background:#EEEDFE;border:none;padding:5px 10px;border-radius:20px;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;gap:4px;text-decoration:none}
+.ei-weight-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.ei-weight{width:80px;height:34px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:14px;padding:0 10px;font-family:var(--font-sans);text-align:center}
+.ei-wlabel{font-size:12px;color:var(--color-text-secondary)}
+.bloc-sep{font-size:11px;font-weight:500;color:#534AB7;text-transform:uppercase;letter-spacing:0.05em;padding:12px 0 6px;border-top:0.5px solid var(--color-border-tertiary);margin-top:4px}
+.bloc-sep:first-child{border-top:none;margin-top:0;padding-top:0}
+.begin-workout-btn{width:100%;padding:15px;background:#534AB7;color:#EEEDFE;border:none;border-radius:var(--border-radius-lg);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0 0}
+.begin-workout-btn:active{opacity:0.85}
+
+/* WORKOUT MODE */
+#s-workout{padding:0}
+.wk-header{background:#26215C;padding:16px 20px}
+.wk-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.wk-title{font-size:14px;color:#AFA9EC}
+.wk-close{background:none;border:none;color:#AFA9EC;font-size:13px;cursor:pointer;font-family:var(--font-sans)}
+.wk-ex-counter{font-size:20px;font-weight:500;color:#EEEDFE}
+.wk-bar{height:4px;background:#3C3489;border-radius:2px;overflow:hidden}
+.wk-bar-fill{height:100%;background:#7F77DD;border-radius:2px;transition:width 0.4s}
+.wk-body{padding:20px}
+.wk-bloc-label{font-size:11px;color:#534AB7;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;background:#EEEDFE;display:inline-block;padding:3px 10px;border-radius:20px}
+.wk-ex-name{font-size:24px;font-weight:500;color:var(--color-text-primary);line-height:1.2;margin-bottom:8px}
+.wk-reps{font-size:16px;color:var(--color-text-secondary);margin-bottom:20px}
+.wk-vid-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:#534AB7;background:#EEEDFE;border:none;padding:8px 14px;border-radius:20px;cursor:pointer;font-family:var(--font-sans);margin-bottom:20px;text-decoration:none}
+.wk-weight-box{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:20px}
+.wk-weight-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:8px}
+.wk-weight-input{width:100%;height:48px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);font-size:20px;font-family:var(--font-sans);text-align:center;font-weight:500}
+.wk-weight-unit{font-size:13px;color:var(--color-text-secondary);text-align:center;margin-top:6px}
+.wk-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.wk-prev{padding:14px;background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);font-size:14px;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;justify-content:center;gap:6px}
+.wk-next{padding:14px;background:#534AB7;color:#EEEDFE;border:none;border-radius:var(--border-radius-lg);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;justify-content:center;gap:6px}
+.wk-next:active{opacity:0.85}
+.wk-timer-box{background:#EEEDFE;border-radius:var(--border-radius-lg);padding:16px;margin-bottom:20px;text-align:center}
+.wk-timer-display{font-size:40px;font-weight:500;color:#26215C;font-variant-numeric:tabular-nums}
+.wk-timer-label{font-size:12px;color:#534AB7;margin-bottom:10px}
+.wk-timer-btns{display:flex;gap:8px;justify-content:center}
+.wk-tbtn{padding:8px 16px;border-radius:20px;border:none;font-size:13px;cursor:pointer;font-family:var(--font-sans);font-weight:500}
+.wk-tbtn.start{background:#534AB7;color:#EEEDFE}
+.wk-tbtn.reset{background:var(--color-background-primary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary)}
+
+/* DONE */
+#s-done{padding:32px 24px;text-align:center}
+.done-icon{width:80px;height:80px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;color:#3B6D11}
+.done-title{font-size:24px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.done-sub{font-size:14px;color:var(--color-text-secondary);margin-bottom:32px;line-height:1.6}
+.done-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px}
+.done-stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px;text-align:center}
+.done-stat-n{font-size:22px;font-weight:500;color:#534AB7}
+.done-stat-l{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.done-btn{width:100%;padding:14px;background:#534AB7;color:#EEEDFE;border:none;border-radius:var(--border-radius-lg);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
+</style>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">App d'entrenament Off-Season Ferran Calmaestra</h2>
+
+<!-- INTRO -->
+<div id="s-intro" class="screen active">
+  <div class="intro-hero">
+    <div class="intro-logo"><i class="ti ti-barbell" style="color:#EEEDFE" aria-hidden="true"></i></div>
+    <div class="intro-title">Off-Season<br>Ferran Calmaestra</div>
+    <div class="intro-sub">Pla de la fisio · 15 juny – 12 juliol 2025</div>
+    <div class="intro-period">
+      <i class="ti ti-calendar-stats intro-period-icon" aria-hidden="true"></i>
+      <div class="intro-period-text">
+        <strong>4 setmanes de preparació</strong>
+        Preventiu · Gym · Plyo · Pista · Recovery
+      </div>
+    </div>
+    <div class="week-days" id="introWeek"></div>
+  </div>
+  <div style="padding:20px 24px 0">
+    <div class="intro-stats">
+      <div class="istat"><div class="istat-num">5</div><div class="istat-lbl">Dies actius</div></div>
+      <div class="istat"><div class="istat-num">28</div><div class="istat-lbl">Sessions</div></div>
+      <div class="istat"><div class="istat-num">4</div><div class="istat-lbl">Blocs/dia</div></div>
+    </div>
+    <button class="intro-cta" onclick="goHome()"><i class="ti ti-player-play" aria-hidden="true"></i> Començar</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="s-home" class="screen">
+  <div class="home-header">
+    <div class="home-header-top">
+      <div>
+        <div class="home-greeting">Hola Ferran 👋</div>
+        <div class="home-name" id="homeDayTitle">Dilluns</div>
+      </div>
+      <button class="home-back" onclick="show('s-intro')"><i class="ti ti-home" aria-hidden="true"></i></button>
+    </div>
+    <div class="day-scroll" id="dayScroll"></div>
+  </div>
+  <div class="home-content" id="homeContent"></div>
+</div>
+
+<!-- BLOCK DETAIL -->
+<div id="s-block" class="screen">
+  <div class="block-header">
+    <button class="bh-back" onclick="show('s-home')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Tornar</button>
+    <div class="bh-title" id="bh-title"></div>
+    <div class="bh-sub" id="bh-sub"></div>
+    <div class="bh-progress"><div class="bh-progress-fill" id="bh-prog-fill" style="width:0%"></div></div>
+    <div class="bh-prog-label" id="bh-prog-label">0 de 0 completats</div>
+  </div>
+  <div class="ex-list" id="ex-list"></div>
+</div>
+
+<!-- WORKOUT MODE -->
+<div id="s-workout" class="screen">
+  <div class="wk-header">
+    <div class="wk-top">
+      <div class="wk-title" id="wk-bloc-name"></div>
+      <button class="wk-close" onclick="exitWorkout()"><i class="ti ti-x" aria-hidden="true"></i> Sortir</button>
+    </div>
+    <div class="wk-ex-counter" id="wk-counter"></div>
+    <div class="wk-bar"><div class="wk-bar-fill" id="wk-bar-fill" style="width:0%"></div></div>
+  </div>
+  <div class="wk-body" id="wk-body"></div>
+</div>
+
+<!-- DONE -->
+<div id="s-done" class="screen">
+  <div class="done-icon"><i class="ti ti-trophy" aria-hidden="true"></i></div>
+  <div class="done-title">Bloc completat!</div>
+  <div class="done-sub" id="done-sub">Has acabat tots els exercicis del bloc.</div>
+  <div class="done-stats">
+    <div class="done-stat"><div class="done-stat-n" id="done-nexs">0</div><div class="done-stat-l">Exercicis</div></div>
+    <div class="done-stat"><div class="done-stat-n" id="done-time">0 min</div><div class="done-stat-l">Durada</div></div>
+  </div>
+  <button class="done-btn" onclick="show('s-block')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Tornar al bloc</button>
+</div>
+
+<script>
+const DAYS_ORDER=['Dilluns','Dimarts','Dimecres','Dijous','Divendres','Dissabte','Diumenge'];
+const DAY_SHORT=['Dl','Dm','Dc','Dj','Dv','Ds','Dg'];
+const DAY_COLORS={preventiu:'purple',gym:'green',plyo:'coral',pista:'amber',recovery:'purple'};
+
+const PLAN={
+  Dilluns:{
+    label:'Dilluns',
+    sub:'Preventiu + Gym EEII Dia 1',
+    blocks:[
+      {id:'d1_turmell',name:'Turmell',type:'preventiu',icon:'ti-shoe',color:'purple',
+       exercises:[
+         {id:'d1t1',name:'Lunge Test',reps:'10 reps'},
+         {id:'d1t2',name:'Dorsi-flexió amb goma',reps:'10 reps'},
+         {id:'d1t3',name:'Single Leg Balance Around the world',reps:'10 reps',url:'https://www.youtube.com/shorts/XemHd4qzqKk'},
+         {id:'d1t4',name:'Split Stance Diagonal KB Swing',reps:'10 reps',url:'https://www.youtube.com/shorts/Pb_FZxefwMQ'},
+         {id:'d1t5',name:'Monster walk',reps:'10 reps'},
+         {id:'d1t6',name:'Single Leg Hops onto plates',reps:'',url:'https://www.youtube.com/shorts/Lp1QFZ3Hobk'},
+         {id:'d1t7',name:'Wall Drill — tècnica de carrera',reps:'',url:'https://www.youtube.com/shorts/FvUCWtdSuzI'},
+       ]},
+      {id:'d1_espatlla',name:'Espatlla',type:'preventiu',icon:'ti-arm',color:'purple',
+       exercises:[
+         {id:'d1e1',name:'Shoulder CARS',reps:'10 reps',url:'https://www.youtube.com/shorts/ZOP6RPjdAhA'},
+         {id:'d1e2',name:'Rotaciones en R2 con pelota',reps:'10 reps',url:'https://www.youtube.com/shorts/ESjyNhqAXY4'},
+         {id:'d1e3',name:'Row + Press OH',reps:'10 reps',url:'https://www.youtube.com/shorts/DuVMk1pYJhE'},
+         {id:'d1e4',name:'Farmer carry OH',reps:'10 reps',weight:true},
+         {id:'d1e5',name:'Plancha amunt i abaix',reps:'10 reps',url:'https://www.youtube.com/shorts/mHzGyMLN144'},
+         {id:'d1e6',name:'Wall slide',reps:'10 reps',url:'https://www.youtube.com/shorts/OG8v2aX3cS8'},
+       ]},
+      {id:'d1_core',name:'Core',type:'preventiu',icon:'ti-circle-dot',color:'purple',
+       exercises:[
+         {id:'d1c1',name:'Dead Bug',reps:'10 reps'},
+         {id:'d1c2',name:'Glute Bridge Pullover',reps:'10 reps',url:'https://www.youtube.com/watch?v=Rmo7eKKS4bU'},
+         {id:'d1c3',name:'Bird dog',reps:'10 reps'},
+         {id:'d1c4',name:'Plancha lateral amb cama amunt',reps:'20 reps'},
+         {id:'d1c5',name:'Press pallof',reps:'10 reps',weight:true},
+         {id:'d1c6',name:'Farmer carry unilateral',reps:'10 reps',weight:true},
+       ]},
+      {id:'d1_gym',name:'Gym EEII Dia 1 — Anterior',type:'gym',icon:'ti-barbell',color:'green',
+       blocs:[
+         {label:'Bloc 1 — 3×4 reps @80% RM (descans complet)',exercises:[
+           {id:'d1g1',name:'Front squat amb taló elevat',reps:'4 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/8iwZ59Z81Mk'},
+         ]},
+         {label:'Bloc 2 — 3×12 reps @60% RM',exercises:[
+           {id:'d1g2',name:'Single Leg Hip Thrust',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/XWAC_NGC3pM'},
+           {id:'d1g3',name:'Single Leg Squat',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/AYWWdxabA3s'},
+           {id:'d1g4',name:'Split Press Pallof',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/SedEDFH8ln0'},
+         ]},
+         {label:'Bloc 3 — 3×12 reps @60% RM',exercises:[
+           {id:'d1g5',name:'Reverse Cable Lunge',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/zwPj2PR5wEc'},
+           {id:'d1g6',name:'SL Switch Elevated Hams Bridge',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/1aHsNsQUZFA'},
+           {id:'d1g7',name:'Monsterwalk',reps:'12 reps × 3 sèries',weight:true,url:'https://youtu.be/Nry0TZg8EN0'},
+         ]},
+       ]},
+    ]
+  },
+  Dimarts:{
+    label:'Dimarts',sub:'Espatlla+Core + EESS Push + Plyo EESS + Pista',
+    blocks:[
+      {id:'dm_prev',name:'Espatlla + Core',type:'preventiu',icon:'ti-arm',color:'purple',
+       exercises:[
+         {id:'dme1',name:'Shoulder CARS',reps:'10 reps',url:'https://www.youtube.com/shorts/ZOP6RPjdAhA'},
+         {id:'dme2',name:'Rotaciones en R2 con pelota',reps:'10 reps',url:'https://www.youtube.com/shorts/ESjyNhqAXY4'},
+         {id:'dme3',name:'Row + Press OH',reps:'10 reps',url:'https://www.youtube.com/shorts/DuVMk1pYJhE'},
+         {id:'dme4',name:'Farmer carry OH',reps:'10 reps',weight:true},
+         {id:'dme5',name:'Plancha amunt i abaix',reps:'10 reps',url:'https://www.youtube.com/shorts/mHzGyMLN144'},
+         {id:'dme6',name:'Wall slide',reps:'10 reps',url:'https://www.youtube.com/shorts/OG8v2aX3cS8'},
+         {id:'dmc1',name:'Plancha lateral amb cama amunt',reps:'20 reps'},
+         {id:'dmc2',name:'Press pallof',reps:'10 reps',weight:true},
+         {id:'dmc3',name:'Farmer carry unilateral',reps:'10 reps',weight:true},
+       ]},
+      {id:'dm_gym',name:'Gym EESS Dia 1 — Push',type:'gym',icon:'ti-barbell',color:'green',
+       blocs:[
+         {label:'Bloc 1 — 3×4 reps @80% RM',exercises:[
+           {id:'dmg1',name:'Press banca',reps:'4 reps × 3 sèries',weight:true},
+         ]},
+         {label:'Bloc 2 — 3×12 reps @60% RM',exercises:[
+           {id:'dmg2',name:'DB Press militar',reps:'12 reps × 3 sèries',weight:true},
+           {id:'dmg3',name:'Rem unilateral amb politja',reps:'12 reps × 3 sèries',weight:true},
+           {id:'dmg4',name:'Press pallof',reps:'12 reps × 3 sèries',weight:true},
+         ]},
+         {label:'Bloc 3 — 3×12 reps @60% RM',exercises:[
+           {id:'dmg5',name:'DB Pájaros',reps:'12 reps × 3 sèries',weight:true},
+           {id:'dmg6',name:'Jalon al pecho',reps:'12 reps × 3 sèries',weight:true},
+           {id:'dmg7',name:'Tríceps',reps:'12 reps × 3 sèries',weight:true},
+         ]},
+       ]},
+      {id:'dm_plyo',name:'Plyo EESS',type:'plyo',icon:'ti-run',color:'coral',
+       exercises:[
+         {id:'dmp1',name:'Medball Chest Throw',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/JCVV5o07q0Q'},
+         {id:'dmp2',name:'Elevated Push up drop catch',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/wXVpkooOuVY'},
+         {id:'dmp3',name:'Split stance Medball rotational Slam',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/wVvPLEtFuXM'},
+         {id:'dmp4',name:'Medball Rotational wall throw',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/02c2YLgF8iE'},
+       ]},
+      {id:'dm_pista',name:'Tir + Bot',type:'pista',icon:'ti-ball-basketball',color:'amber',
+       exercises:[
+         {id:'dmpista',name:'Sessió tir + bot (pista)',reps:'Sessió tècnica'},
+       ]},
+    ]
+  },
+  Dimecres:{
+    label:'Dimecres',sub:'Turmell + Cardio chill',
+    blocks:[
+      {id:'dc_turmell',name:'Turmell',type:'preventiu',icon:'ti-shoe',color:'purple',
+       exercises:[
+         {id:'dct1',name:'Lunge Test',reps:'10 reps'},
+         {id:'dct2',name:'Dorsi-flexió amb goma',reps:'10 reps'},
+         {id:'dct3',name:'Single Leg Balance Around the world',reps:'10 reps',url:'https://www.youtube.com/shorts/XemHd4qzqKk'},
+         {id:'dct4',name:'Split Stance Diagonal KB Swing',reps:'10 reps',url:'https://www.youtube.com/shorts/Pb_FZxefwMQ'},
+         {id:'dct5',name:'Monster walk',reps:'10 reps'},
+         {id:'dct6',name:'Single Leg Hops onto plates',reps:'',url:'https://www.youtube.com/shorts/Lp1QFZ3Hobk'},
+         {id:'dct7',name:'Wall Drill',reps:'',url:'https://www.youtube.com/shorts/FvUCWtdSuzI'},
+       ]},
+      {id:'dc_cardio',name:'Cardio chill',type:'recovery',icon:'ti-heart-rate-monitor',color:'purple',
+       exercises:[{id:'dccardio',name:'Cardio chill — ritme suau',reps:'30 min aprox',timer:1800}]},
+    ]
+  },
+  Dijous:{
+    label:'Dijous',sub:'Turmell+Espatlla + EEII Dia 2 + Plyo EEII + Pista',
+    blocks:[
+      {id:'dj_prev',name:'Turmell + Espatlla',type:'preventiu',icon:'ti-shoe',color:'purple',
+       exercises:[
+         {id:'djt1',name:'Lunge Test',reps:'10 reps'},
+         {id:'djt2',name:'Dorsi-flexió amb goma',reps:'10 reps'},
+         {id:'djt3',name:'Single Leg Balance Around the world',reps:'10 reps',url:'https://www.youtube.com/shorts/XemHd4qzqKk'},
+         {id:'dje1',name:'Shoulder CARS',reps:'10 reps',url:'https://www.youtube.com/shorts/ZOP6RPjdAhA'},
+         {id:'dje2',name:'Row + Press OH',reps:'10 reps',url:'https://www.youtube.com/shorts/DuVMk1pYJhE'},
+         {id:'dje3',name:'Farmer carry OH',reps:'10 reps',weight:true},
+         {id:'dje4',name:'Plancha amunt i abaix',reps:'10 reps',url:'https://www.youtube.com/shorts/mHzGyMLN144'},
+       ]},
+      {id:'dj_gym',name:'Gym EEII Dia 2 — Posterior',type:'gym',icon:'ti-barbell',color:'green',
+       blocs:[
+         {label:'Bloc 1 — 3×4 reps @80% RM',exercises:[
+           {id:'djg1',name:'Hip Thrust',reps:'4 reps × 3 sèries',weight:true,url:'https://www.youtube.com/watch?v=5S8SApGU_Lk'},
+         ]},
+         {label:'Bloc 2 — 3×12 reps @60% RM',exercises:[
+           {id:'djg2',name:'Bulgarian Pogo Jump',reps:'12 reps × 3 sèries',url:'https://youtube.com/shorts/hi5JRsyJBUQ'},
+           {id:'djg3',name:'Pes mort asimètric',reps:'12 reps × 3 sèries',weight:true,url:'https://www.youtube.com/shorts/zxT2saf3-wQ'},
+           {id:'djg4',name:'Lift en polea',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/HH8wWTqUEGQ'},
+         ]},
+         {label:'Bloc 3 — 3×12 reps @60% RM',exercises:[
+           {id:'djg5',name:'Swing Asimètric',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/y3YI5YrhpE'},
+           {id:'djg6',name:'Leg Extension',reps:'12 reps × 3 sèries',weight:true,url:'https://youtube.com/shorts/t8--YpjTmg'},
+           {id:'djg7',name:'Box Switch hip',reps:'12 reps × 3 sèries',url:'https://youtube.com/shorts/J92KKtpSQLc'},
+         ]},
+       ]},
+      {id:'dj_plyov',name:'Plyo EEII — Vertical',type:'plyo',icon:'ti-arrow-up',color:'coral',
+       exercises:[
+         {id:'djpv1',name:'Squat ISO push 100% MVC',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/ZRTXOWNJsg5'},
+         {id:'djpv2',name:'Seated vertical Jump',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/ckOWNYFPHHk'},
+         {id:'djpv3',name:'Jump and reach lastrado (<10kg)',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/5hI57ONzVLs'},
+         {id:'djpv4',name:'CMJ assistit amb goma',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/Ler1YOrpkxY'},
+       ]},
+      {id:'dj_plyoh',name:'Plyo EEII — Horitzontal',type:'plyo',icon:'ti-arrow-right',color:'coral',
+       exercises:[
+         {id:'djph1',name:'SL Squat ISO push 100% MVC',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/MX5JYrHMpuw'},
+         {id:'djph2',name:'SL Triple Hop',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/QBqEvUBUtq4'},
+         {id:'djph3',name:'SL Hop Lastrado (<5kg)',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/shorts/ml8WNXFJxw5'},
+         {id:'djph4',name:'Batudes o sprint',reps:'5 reps × 4 sèries',url:'https://www.youtube.com/watch?v=ClRr6rDHfIs'},
+       ]},
+      {id:'dj_pista',name:'Aceleracions i CODs',type:'pista',icon:'ti-run',color:'amber',
+       exercises:[{id:'djpista',name:'Aceleracions i CODs (pista)',reps:'Sessió tècnica'}]},
+    ]
+  },
+  Divendres:{
+    label:'Divendres',sub:'Espatlla + EESS Pull + HIIT',
+    blocks:[
+      {id:'dv_prev',name:'Espatlla',type:'preventiu',icon:'ti-arm',color:'purple',
+       exercises:[
+         {id:'dve1',name:'Shoulder CARS',reps:'10 reps',url:'https://www.youtube.com/shorts/ZOP6RPjdAhA'},
+         {id:'dve2',name:'Rotaciones en R2 con pelota',reps:'10 reps',url:'https://www.youtube.com/shorts/ESjyNhqAXY4'},
+         {id:'dve3',name:'Row + Press OH',reps:'10 reps',url:'https://www.youtube.com/shorts/DuVMk1pYJhE'},
+         {id:'dve4',name:'Farmer carry OH',reps:'10 reps',weight:true},
+         {id:'dve5',name:'Plancha amunt i abaix',reps:'10 reps',url:'https://www.youtube.com/shorts/mHzGyMLN144'},
+         {id:'dve6',name:'Wall slide',reps:'10 reps',url:'https://www.youtube.com/shorts/OG8v2aX3cS8'},
+       ]},
+      {id:'dv_gym',name:'Gym EESS Dia 2 — Pull',type:'gym',icon:'ti-barbell',color:'green',
+       blocs:[
+         {label:'Bloc 1 — 3×5 reps @80% RM',exercises:[
+           {id:'dvg1',name:'Rem amb màquina',reps:'5 reps × 3 sèries',weight:true},
+         ]},
+         {label:'Bloc 2 — 3×12 reps @60% RM',exercises:[
+           {id:'dvg2',name:'Dominades',reps:'12 reps × 3 sèries'},
+           {id:'dvg3',name:'Flexions arquero',reps:'12 reps × 3 sèries'},
+           {id:'dvg4',name:'Curl Bíceps',reps:'12 reps × 3 sèries',weight:true},
+         ]},
+         {label:'Bloc 3 — 3×12 reps @60% RM',exercises:[
+           {id:'dvg5',name:'Remo con barra',reps:'12 reps × 3 sèries',weight:true},
+           {id:'dvg6',name:'DB Press pecho inclinado',reps:'12 reps × 3 sèries',weight:true},
+           {id:'dvg7',name:'Lift o chop amb politja',reps:'12 reps × 3 sèries',weight:true,url:'https://www.youtube.com/shorts/lqwvmr5Vhxw'},
+         ]},
+       ]},
+      {id:'dv_hiit',name:'HIIT',type:'pista',icon:'ti-bolt',color:'amber',
+       hiit:true,
+       exercises:[{id:'dvhiit',name:'HIIT — 8× 10" sprint / 20" descans',reps:'Rem, el·líptica, bici, battle rope, córrer o piscina',hiit:true}]},
+    ]
+  },
+  Dissabte:{
+    label:'Dissabte',sub:'Preventiu + Potència + Cardio chill',
+    blocks:[
+      {id:'ds_prev',name:'Turmell + Espatlla + Core',type:'preventiu',icon:'ti-shoe',color:'purple',
+       exercises:[
+         {id:'dst1',name:'Lunge Test',reps:'10 reps'},
+         {id:'dst2',name:'Dorsi-flexió amb goma',reps:'10 reps'},
+         {id:'dse1',name:'Shoulder CARS',reps:'10 reps',url:'https://www.youtube.com/shorts/ZOP6RPjdAhA'},
+         {id:'dse2',name:'Row + Press OH',reps:'10 reps',url:'https://www.youtube.com/shorts/DuVMk1pYJhE'},
+         {id:'dsc1',name:'Plancha lateral amb cama amunt',reps:'20 reps'},
+         {id:'dsc2',name:'Press pallof',reps:'10 reps',weight:true},
+         {id:'dsc3',name:'Farmer carry unilateral',reps:'10 reps',weight:true},
+       ]},
+      {id:'ds_pot',name:'Potència',type:'plyo',icon:'ti-rocket',color:'coral',
+       exercises:[{id:'dspot',name:'Sessió de potència',reps:'Segueix pla de la fisio'}]},
+      {id:'ds_cardio',name:'Cardio chill',type:'recovery',icon:'ti-heart-rate-monitor',color:'purple',
+       exercises:[{id:'dscardio',name:'Cardio chill — ritme suau',reps:'30 min aprox',timer:1800}]},
+    ]
+  },
+  Diumenge:{label:'Diumenge',sub:'Descans',rest:true,blocks:[]}
+};
+
+function getAllExs(block){
+  if(block.blocs){
+    let all=[];
+    block.blocs.forEach(b=>b.exercises.forEach(e=>all.push(e)));
+    return all;
+  }
+  return block.exercises||[];
+}
+
+let state={};
+function save(){try{localStorage.setItem('fc_os2',JSON.stringify(state))}catch(e){}}
+function load(){try{const s=localStorage.getItem('fc_os2');if(s)state=JSON.parse(s)}catch(e){}}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function getTodayDay(){
+  const d=new Date().getDay();
+  return DAYS_ORDER[[0,1,2,3,4,5,6].map((_,i)=>i).indexOf([6,0,1,2,3,4,5][d>-1?d:0])];
+}
+
+function goHome(){
+  show('s-home');
+  const d=new Date().getDay();
+  const map={0:'Diumenge',1:'Dilluns',2:'Dimarts',3:'Dimecres',4:'Dijous',5:'Divendres',6:'Dissabte'};
+  renderHome(map[d]||'Dilluns');
+}
+
+let activeDay='Dilluns';
+function renderHome(day){
+  activeDay=day;
+  document.getElementById('homeDayTitle').textContent=day;
+  const scroll=document.getElementById('dayScroll');
+  scroll.innerHTML='';
+  DAYS_ORDER.forEach(d=>{
+    const plan=PLAN[d];
+    const btn=document.createElement('button');
+    btn.className='day-pill'+(d===day?' active':'')+(plan.rest?' rest-day':'');
+    const typeLabel=plan.rest?'Descans':(plan.blocks[0]?plan.blocks[0].type:'');
+    btn.innerHTML=`<span class="dp-day">${DAY_SHORT[DAYS_ORDER.indexOf(d)]}</span><span class="dp-type">${plan.rest?'Descans':typeLabel}</span>`;
+    btn.onclick=()=>renderHome(d);
+    scroll.appendChild(btn);
+  });
+
+  const plan=PLAN[day];
+  const content=document.getElementById('homeContent');
+  if(plan.rest){
+    content.innerHTML=`<div class="rest-screen"><i class="ti ti-moon" aria-hidden="true"></i><h2>Dia de descans</h2><p>Recupera i descansa bé. Tornem demà!</p></div>`;
+    return;
+  }
+
+  let html=`<div class="today-banner"><div class="tb-label">${day}</div><div class="tb-title">${plan.sub}</div><div class="tb-sub">${plan.blocks.length} blocs d'entrenament</div></div>`;
+  html+=`<div class="blocks-title">Blocs del dia</div>`;
+
+  plan.blocks.forEach(block=>{
+    const exs=getAllExs(block);
+    const done=exs.filter(e=>state[e.id]).length;
+    const pct=exs.length?Math.round(done/exs.length*100):0;
+    html+=`<div class="block-card" onclick="openBlock('${day}','${block.id}')">
+      <div class="bc-top">
+        <div class="bc-icon ${block.color}"><i class="ti ${block.icon}" aria-hidden="true"></i></div>
+        <div class="bc-info">
+          <div class="bc-name">${block.name}</div>
+          <div class="bc-count">${exs.length} exercicis · ${done} completats</div>
+        </div>
+        <i class="ti ti-chevron-right bc-arrow" aria-hidden="true"></i>
+      </div>
+      ${exs.length>0?`<div class="bc-progress"><div class="bc-progress-fill ${block.color}" style="width:${pct}%"></div></div>`:''}
+    </div>`;
+  });
+
+  const totalExs=plan.blocks.reduce((a,b)=>a+getAllExs(b).length,0);
+  const totalDone=plan.blocks.reduce((a,b)=>a+getAllExs(b).filter(e=>state[e.id]).length,0);
+  if(totalExs>0&&totalDone===totalExs){
+    html+=`<div style="background:#EAF3DE;border-radius:var(--border-radius-lg);padding:14px 16px;display:flex;align-items:center;gap:10px;margin-top:8px"><i class="ti ti-trophy" style="color:#3B6D11;font-size:20px" aria-hidden="true"></i><span style="font-size:14px;color:#27500A;font-weight:500">Dia completat!</span></div>`;
+  }
+
+  content.innerHTML=html;
+}
+
+let currentDay='', currentBlockId='', currentExFlat=[], currentIdx=0, wkStart=null, wkTimer=null;
+
+function openBlock(day,blockId){
+  currentDay=day;currentBlockId=blockId;
+  const plan=PLAN[day];
+  const block=plan.blocks.find(b=>b.id===blockId);
+  document.getElementById('bh-title').textContent=block.name;
+  document.getElementById('bh-sub').textContent=plan.sub;
+  
+  const exs=getAllExs(block);
+  const done=exs.filter(e=>state[e.id]).length;
+  const pct=exs.length?Math.round(done/exs.length*100):0;
+  document.getElementById('bh-prog-fill').style.width=pct+'%';
+  document.getElementById('bh-prog-label').textContent=done+' de '+exs.length+' completats';
+
+  let html='';
+  function renderExItem(ex){
+    const isDone=!!state[ex.id];
+    const w=state['w_'+ex.id]||'';
+    return `<div class="ex-item ${isDone?'done':''}" id="ei_${ex.id}">
+      <div class="ei-top">
+        <button class="ei-check ${isDone?'checked':''}" onclick="toggleEx('${ex.id}','${day}','${blockId}')" aria-label="Marcar">
+          <i class="ti ti-check" aria-hidden="true"></i>
+        </button>
+        <div class="ei-body">
+          <div class="ei-name">${ex.name}</div>
+          ${ex.reps?`<div class="ei-reps"><i class="ti ti-repeat" style="font-size:12px;vertical-align:-1px" aria-hidden="true"></i> ${ex.reps}</div>`:''}
+          <div class="ei-actions">
+            ${ex.url?`<a href="${ex.url}" class="ei-vid" target="_blank"><i class="ti ti-brand-youtube" aria-hidden="true"></i> Vídeo</a>`:''}
+          </div>
+          ${ex.weight?`<div class="ei-weight-row"><input class="ei-weight" type="number" placeholder="0" value="${w}" min="0" step="0.5" onchange="saveW('${ex.id}',this.value)" aria-label="Pes"><span class="ei-wlabel">kg</span></div>`:''}
+          ${ex.timer?`<div style="margin-top:10px"><button class="ei-vid" id="tbtn_${ex.id}" onclick="toggleTimer('${ex.id}',${ex.timer},this)"><i class="ti ti-player-play" aria-hidden="true"></i> Temporitzador</button></div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(block.blocs){
+    block.blocs.forEach(b=>{
+      html+=`<div class="bloc-sep">${b.label}</div>`;
+      b.exercises.forEach(ex=>{html+=renderExItem(ex);});
+    });
+  } else {
+    (block.exercises||[]).forEach(ex=>{html+=renderExItem(ex);});
+  }
+
+  html+=`<button class="begin-workout-btn" onclick="startWorkout('${day}','${blockId}')"><i class="ti ti-player-play" aria-hidden="true"></i> Iniciar entrenament pas a pas</button>`;
+
+  document.getElementById('ex-list').innerHTML=html;
+  show('s-block');
+}
+
+window.toggleEx=function(id,day,blockId){
+  state[id]=!state[id];save();
+  const item=document.getElementById('ei_'+id);
+  const btn=item.querySelector('.ei-check');
+  if(state[id]){item.classList.add('done');btn.classList.add('checked');}
+  else{item.classList.remove('done');btn.classList.remove('checked');}
+  const plan=PLAN[day];
+  const block=plan.blocks.find(b=>b.id===blockId);
+  const exs=getAllExs(block);
+  const done=exs.filter(e=>state[e.id]).length;
+  const pct=exs.length?Math.round(done/exs.length*100):0;
+  document.getElementById('bh-prog-fill').style.width=pct+'%';
+  document.getElementById('bh-prog-label').textContent=done+' de '+exs.length+' completats';
+};
+
+window.saveW=function(id,val){state['w_'+id]=val;save();};
+
+let activeTimers={};
+window.toggleTimer=function(id,secs,btn){
+  if(activeTimers[id]){clearInterval(activeTimers[id]);delete activeTimers[id];btn.innerHTML='<i class="ti ti-player-play" aria-hidden="true"></i> Temporitzador';return;}
+  let rem=secs;
+  function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+  btn.innerHTML='<i class="ti ti-player-stop" aria-hidden="true"></i> '+fmt(rem);
+  activeTimers[id]=setInterval(()=>{rem--;if(rem<=0){clearInterval(activeTimers[id]);delete activeTimers[id];btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Fet!';}else{btn.innerHTML='<i class="ti ti-player-stop" aria-hidden="true"></i> '+fmt(rem);}},1000);
+};
+
+function flattenBlock(block){
+  if(block.blocs){
+    let all=[];
+    block.blocs.forEach(b=>b.exercises.forEach(e=>all.push({...e,_bloc:b.label})));
+    return all;
+  }
+  return (block.exercises||[]).map(e=>({...e,_bloc:''}));
+}
+
+function startWorkout(day,blockId){
+  const block=PLAN[day].blocks.find(b=>b.id===blockId);
+  currentExFlat=flattenBlock(block);
+  currentIdx=0;wkStart=Date.now();
+  renderWorkoutStep();
+  show('s-workout');
+}
+
+let wkTimerInterval=null, wkTimerRem=0, wkTimerRunning=false;
+
+function renderWorkoutStep(){
+  if(currentIdx>=currentExFlat.length){finishWorkout();return;}
+  const ex=currentExFlat[currentIdx];
+  const total=currentExFlat.length;
+  const block=PLAN[currentDay].blocks.find(b=>b.id===currentBlockId);
+  document.getElementById('wk-bloc-name').textContent=block.name;
+  document.getElementById('wk-counter').textContent=(currentIdx+1)+' / '+total;
+  document.getElementById('wk-bar-fill').style.width=Math.round((currentIdx/total)*100)+'%';
+
+  const w=state['w_'+ex.id]||'';
+  let body='';
+  if(ex._bloc)body+=`<div class="wk-bloc-label">${ex._bloc}</div>`;
+  body+=`<div class="wk-ex-name">${ex.name}</div>`;
+  if(ex.reps)body+=`<div class="wk-reps"><i class="ti ti-repeat" style="font-size:15px;vertical-align:-2px" aria-hidden="true"></i> ${ex.reps}</div>`;
+  if(ex.url)body+=`<a href="${ex.url}" class="wk-vid-btn" target="_blank"><i class="ti ti-brand-youtube" aria-hidden="true"></i> Veure vídeo</a>`;
+  if(ex.weight)body+=`<div class="wk-weight-box"><div class="wk-weight-label"><i class="ti ti-weight" style="font-size:13px;vertical-align:-1px" aria-hidden="true"></i> Registra el pes</div><input class="wk-weight-input" type="number" placeholder="0" value="${w}" min="0" step="0.5" onchange="saveW('${ex.id}',this.value)" aria-label="Pes en kg"><div class="wk-weight-unit">kg</div></div>`;
+  if(ex.timer){
+    wkTimerRem=ex.timer;wkTimerRunning=false;
+    if(wkTimerInterval)clearInterval(wkTimerInterval);
+    function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+    body+=`<div class="wk-timer-box"><div class="wk-timer-label"><i class="ti ti-clock" aria-hidden="true"></i> Temporitzador</div><div class="wk-timer-display" id="wk-timer-disp">${fmt(wkTimerRem)}</div><div class="wk-timer-btns"><button class="wk-tbtn start" onclick="wkTimerToggle()"><i class="ti ti-player-play" id="wk-timer-icon" aria-hidden="true"></i> Iniciar</button><button class="wk-tbtn reset" onclick="wkTimerReset(${ex.timer})">Reset</button></div></div>`;
+  }
+  body+=`<div class="wk-nav">
+    <button class="wk-prev" onclick="wkPrev()" ${currentIdx===0?'style="opacity:0.4;pointer-events:none"':''}><i class="ti ti-arrow-left" aria-hidden="true"></i> Anterior</button>
+    <button class="wk-next" onclick="wkNext()">${currentIdx===total-1?'Acabar':'Següent'} <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+  </div>`;
+
+  document.getElementById('wk-body').innerHTML=body;
+  state[ex.id]=true;save();
+}
+
+window.wkTimerToggle=function(){
+  function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+  if(wkTimerRunning){
+    clearInterval(wkTimerInterval);wkTimerRunning=false;
+    document.querySelector('.wk-tbtn.start').innerHTML='<i class="ti ti-player-play" aria-hidden="true"></i> Continuar';
+  } else {
+    wkTimerRunning=true;
+    document.querySelector('.wk-tbtn.start').innerHTML='<i class="ti ti-player-pause" aria-hidden="true"></i> Pausa';
+    wkTimerInterval=setInterval(()=>{
+      wkTimerRem--;
+      const d=document.getElementById('wk-timer-disp');
+      if(d)d.textContent=fmt(wkTimerRem);
+      if(wkTimerRem<=0){clearInterval(wkTimerInterval);wkTimerRunning=false;const btn=document.querySelector('.wk-tbtn.start');if(btn)btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Fet!';}
+    },1000);
+  }
+};
+
+window.wkTimerReset=function(secs){
+  clearInterval(wkTimerInterval);wkTimerRunning=false;wkTimerRem=secs;
+  function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+  const d=document.getElementById('wk-timer-disp');if(d)d.textContent=fmt(secs);
+  const btn=document.querySelector('.wk-tbtn.start');if(btn)btn.innerHTML='<i class="ti ti-player-play" aria-hidden="true"></i> Iniciar';
+};
+
+function wkNext(){
+  currentIdx++;
+  if(wkTimerInterval)clearInterval(wkTimerInterval);
+  renderWorkoutStep();
+}
+function wkPrev(){if(currentIdx>0){currentIdx--;renderWorkoutStep();}}
+
+function exitWorkout(){
+  if(wkTimerInterval)clearInterval(wkTimerInterval);
+  show('s-block');
+  openBlock(currentDay,currentBlockId);
+}
+
+function finishWorkout(){
+  if(wkTimerInterval)clearInterval(wkTimerInterval);
+  const mins=Math.round((Date.now()-wkStart)/60000);
+  document.getElementById('done-nexs').textContent=currentExFlat.length;
+  document.getElementById('done-time').textContent=mins+' min';
+  const block=PLAN[currentDay].blocks.find(b=>b.id===currentBlockId);
+  document.getElementById('done-sub').textContent='Has completat tots els exercicis de «'+block.name+'». Molt bé!';
+  show('s-done');
+  renderHome(currentDay);
+}
+
+function initIntroWeek(){
+  const d=new Date().getDay();
+  const map={0:6,1:0,2:1,3:2,4:3,5:4,6:5};
+  const todayIdx=map[d];
+  const el=document.getElementById('introWeek');
+  DAYS_ORDER.forEach((day,i)=>{
+    const div=document.createElement('div');
+    div.className='wd'+(i===todayIdx?' today':'')+(PLAN[day].rest?' rest':'');
+    div.innerHTML=DAY_SHORT[i]+'<span>'+(i+1)+'</span>';
+    el.appendChild(div);
+  });
+}
+
+load();
+initIntroWeek();
+</script>
